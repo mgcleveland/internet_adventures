@@ -5,6 +5,10 @@ var board = new Board(BOARD_SIZE);
 var player = new Player();
 
 
+// =============================================================================
+// OBJECTS
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 //
 // -----------------------------------------------------------------------------
@@ -24,6 +28,55 @@ function Board(size) {
 function Player() {
     this.x = 0;
     this.y = 0;
+
+    this.health = 100;
+    this.mana = 10;
+
+    this.strength = 10;
+    this.dexterity = 10;
+    this.magic = 10;
+    this.defense = 10;
+}
+
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+function Monster() {
+    this.strength = 5;
+    this.defense = 5;
+}
+
+
+// =============================================================================
+// FUNCTIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+function random_encounter() {
+    return Math.random() > .75;
+}
+
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+function fight_monster(monster) {
+    console.log("Fighting monster");
+
+    if (window.player.strength > monster.strength) {
+        console.log("Player wins!");
+    }
+}
+
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+function generate_monster() {
+    return new Monster();
 }
 
 
@@ -31,15 +84,6 @@ function Player() {
 //
 // -----------------------------------------------------------------------------
 function create_array(length) {
-    // var arr = new Array(length || 0),
-    //     i = length;
-
-    // if (arguments.length > 1) {
-    //     var args = Array.prototype.slice.call(arguments, 1);
-    //     while(i--) arr[length-1 - i] = createArray.apply(this, args);
-    // }
-
-    // return arr;
     var retval = new Array(length);
 
     for (i = 0; i < length; i++) {
@@ -89,6 +133,15 @@ function move_player(direction) {
 
     console.log("Player position: (" + player_x + ", " + player_y + ")");
     console.log("Tile value: " + window.board.tiles[player_x][player_y]);
+
+    // fight monster if exists
+    if (random_encounter()) {
+        console.log("Encountered a monster");
+
+        var monster = generate_monster();
+
+        fight_monster(monster);
+    }
 }
 
 
